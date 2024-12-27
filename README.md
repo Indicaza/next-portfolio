@@ -1,36 +1,134 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### README.md
 
-## Getting Started
+````markdown
+# Next.js Portfolio Project with Docker
 
-First, run the development server:
+This project is a portfolio built with Next.js, TypeScript, and Tailwind CSS, fully containerized using Docker for easy development and deployment.
+
+## Features
+
+- **Next.js**: React-based framework for production-ready web applications.
+- **TypeScript**: Static typing for better code quality.
+- **Tailwind CSS**: Utility-first CSS framework.
+- **Docker**: Containerized development and production environments.
+- **MongoDB**: Integrated database with Dockerized setup.
+
+---
+
+## Prerequisites
+
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop).
+2. Install [Node.js (v18)](https://nodejs.org/) for local debugging.
+3. Clone this repository:
+   ```bash
+   git clone <repository_url>
+   cd next-portfolio
+   ```
+````
+
+---
+
+## Setup Instructions
+
+### 1. Environment Variables
+
+This project uses two environment files:
+
+- `.env` (default shared variables):
+  ```env
+  MONGODB_URI=mongodb://mongo:27017/mydatabase
+  NODE_ENV=development
+  ```
+- `.env.local` (local development overrides, ignored in production):
+  ```env
+  MONGODB_URI=mongodb://root:example@mongo:27017/mydatabase
+  ```
+
+### 2. Development
+
+Run the following to start the project in development mode:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+docker-compose up --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Start the Next.js development server at `http://localhost:3000`.
+- Start MongoDB on `mongodb://localhost:27017`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To stop the containers:
 
-## Learn More
+```bash
+docker-compose down
+```
 
-To learn more about Next.js, take a look at the following resources:
+### 3. Production
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+To build and serve the app in production:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Build the app:
+   ```bash
+   docker-compose build
+   ```
+2. Run the production container:
+   ```bash
+   docker-compose -f docker-compose.yml up
+   ```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Docker Commands Cheatsheet
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### General Commands
+
+| Command                                 | Description                                      |
+| --------------------------------------- | ------------------------------------------------ |
+| `docker-compose up --build`             | Build and start the containers.                  |
+| `docker-compose up`                     | Start containers without rebuilding.             |
+| `docker-compose down`                   | Stop and remove containers.                      |
+| `docker ps`                             | List running containers.                         |
+| `docker exec -it <container_name> bash` | Access a container's shell.                      |
+| `docker logs <container_name>`          | View logs for a container.                       |
+| `docker system prune -f`                | Clean up unused containers, images, and volumes. |
+
+### Debugging
+
+| Command                  | Description                          |
+| ------------------------ | ------------------------------------ |
+| `docker-compose logs -f` | View real-time logs of all services. |
+| `docker-compose restart` | Restart the containers.              |
+
+---
+
+## Adding Dependencies
+
+1. Install dependencies locally:
+   ```bash
+   npm install <package_name>
+   ```
+2. Rebuild the Docker container:
+   ```bash
+   docker-compose up --build
+   ```
+
+---
+
+## CI/CD
+
+To set up a CI/CD pipeline, this project can be integrated with:
+
+- **GitHub Actions** for automated builds.
+- **AWS (EC2)** or **Vercel** for hosting.
+
+Let me know if you'd like step-by-step guidance on CI/CD setup! 🚀
+
+```
+
+---
+
+### **Next Steps**
+1. Add this `README.md` to your project root.
+2. Review the Docker Cheatsheet to get comfortable with the workflow.
+3. Let me know if you need help with the CI/CD pipeline setup.
+```

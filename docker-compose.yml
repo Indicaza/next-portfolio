@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+  nextjs:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      MONGODB_URI: ${MONGODB_URI}
+      NODE_ENV: ${NODE_ENV:-development}
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run dev
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:5.0
+    container_name: my_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: mydatabase
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
+    driver: local
